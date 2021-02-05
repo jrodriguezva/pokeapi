@@ -34,8 +34,10 @@ workflows:
             - test
           post-steps:
           - run: 
-              name: Run tests
-              command: make docker-setup
+              name: Run setup
+              command: |
+                make setup
+                make setup
           filters:
             branches:
               only: 
