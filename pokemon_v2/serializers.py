@@ -255,9 +255,32 @@ class PokemonShapeSummarySerializer(serializers.HyperlinkedModelSerializer):
 
 
 class PokemonSummarySerializer(serializers.HyperlinkedModelSerializer):
+    image = serializers.SerializerMethodField("get_pokemon_sprites")
+    
     class Meta:
         model = Pokemon
-        fields = ("name", "url")
+        fields = ("id", "name", "url","image")
+
+    def get_pokemon_sprites(self, obj):
+
+        sprites_object = PokemonSprites.objects.get(pokemon_id=obj.id)
+        sprites_data = PokemonSpritesSerializer(
+            sprites_object, context=self.context
+        ).data
+        sprites_data = json.loads(sprites_data["sprites"])
+        host = "raw.githubusercontent.com/PokeAPI/sprites/master/"
+
+        def replace_sprite_url(d):
+            for key, value in d.items():
+                if isinstance(value, dict):
+                    replace_sprite_url(value)
+                else:
+                    if d[key]:
+                        d[key] = "https://" + host + d[key].replace("/media/", "")
+
+        replace_sprite_url(sprites_data)
+        
+        return sprites_data["other"]["dream_world"]["front_default"]
 
 
 class PokemonSpeciesSummarySerializer(serializers.HyperlinkedModelSerializer):
