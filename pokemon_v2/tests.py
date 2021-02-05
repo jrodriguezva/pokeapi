@@ -2417,6 +2417,7 @@ class APITests(APIData, APITestCase):
         pokemon_ability = self.setup_pokemon_ability_data(
             ability=ability, pokemon=pokemon
         )
+        self.setup_pokemon_sprites_data(pokemon)
 
         response = self.client.get("{}/ability/{}/".format(API_V2, ability.pk))
 
@@ -2698,7 +2699,7 @@ class APITests(APIData, APITestCase):
         pokemon = self.setup_pokemon_data(name="pkmn for base itm")
         pokemon_item = self.setup_pokemon_item_data(pokemon=pokemon, item=item)
         evolution_chain = self.setup_evolution_chain_data(baby_trigger_item=item)
-
+        self.setup_pokemon_sprites_data(pokemon)
         # map item attribute to item
         item_attribute_map = ItemAttributeMap(item=item, item_attribute=item_attribute)
         item_attribute_map.save()
@@ -3085,6 +3086,7 @@ class APITests(APIData, APITestCase):
         pokemon1 = self.setup_pokemon_data(
             name="pkmn1 for base encntr", pokemon_species=pokemon_species1
         )
+        self.setup_pokemon_sprites_data(pokemon1)
         encounter_slot1 = self.setup_encounter_slot_data(
             encounter_method, slot=1, rarity=30
         )
@@ -3100,6 +3102,7 @@ class APITests(APIData, APITestCase):
         pokemon2 = self.setup_pokemon_data(
             name="pkmn2 for base encntr", pokemon_species=pokemon_species2
         )
+        self.setup_pokemon_sprites_data(pokemon2)
         encounter_slot2 = self.setup_encounter_slot_data(
             encounter_method, slot=2, rarity=40
         )
@@ -3397,6 +3400,7 @@ class APITests(APIData, APITestCase):
         move = self.setup_move_data(name="mv for base tp", type=type)
         pokemon = self.setup_pokemon_data(name="pkmn for base tp")
         pokemon_type = self.setup_pokemon_type_data(pokemon=pokemon, type=type)
+        self.setup_pokemon_sprites_data(pokemon)
 
         no_damage_to = self.setup_type_data(name="no damage to tp")
         half_damage_to = self.setup_type_data(name="half damage to tp")
@@ -3899,6 +3903,7 @@ class APITests(APIData, APITestCase):
         )
         pokemon = self.setup_pokemon_data()
         version_group = self.setup_version_group_data()
+        self.setup_pokemon_sprites_data(pokemon)
 
         self.setup_pokemon_move_data(pokemon, move, version_group)
 
@@ -5007,7 +5012,7 @@ class APITests(APIData, APITestCase):
             pokemon=pokemon, name="pkm form for base pkmn"
         )
         pokemon_form_sprites = self.setup_pokemon_form_sprites_data(pokemon_form)
-
+        self.setup_pokemon_sprites_data(pokemon)
         sprites_data = json.loads(pokemon_form_sprites.sprites)
 
         response = self.client.get(

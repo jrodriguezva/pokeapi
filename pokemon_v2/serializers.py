@@ -280,8 +280,9 @@ class PokemonSummarySerializer(serializers.HyperlinkedModelSerializer):
                         d[key] = "https://" + host + d[key].replace("/media/", "")
 
         replace_sprite_url(sprites_data)
-
-        return sprites_data["other"]["dream_world"]["front_default"]
+        if not isinstance(sprites_data, dict):
+            return ""
+        return sprites_data.get("other", {}).get("dream_world", {}).get("front_default")
 
 
 class PokemonSpeciesSummarySerializer(serializers.HyperlinkedModelSerializer):
