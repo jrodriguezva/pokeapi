@@ -24,21 +24,18 @@ jobs:
           name: Run tests
           command: make test
 
-  deploy:
-    - heroku/deploy-via-git:
-        post-steps:
-          - run:
-              name: Run tests
-              command: make docker-setup
-
 workflows:
   version: 2
   test-and-deploy:
     jobs:
       - test
-      - deploy:
+      - heroku/deploy-via-git:
           requires:
             - test
+          post-steps:
+          - run: 
+              name: Run tests
+              command: make docker-setup
           filters:
             branches:
               only: 
@@ -47,9 +44,13 @@ workflows:
   weekly:
     jobs:
       - test
-      - deploy:
+      - heroku/deploy-via-git:
           requires:
             - test
+          post-steps:
+          - run: 
+              name: Run tests
+              command: make docker-setup
     triggers:
       - schedule:
           cron: "0 0 * * 1"
