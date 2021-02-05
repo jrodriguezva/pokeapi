@@ -1431,7 +1431,7 @@ class ItemDetailSerializer(serializers.ModelSerializer):
         for key in sprites_data:
             if sprites_data[key]:
                 sprites_data[key] = (
-                        "https://" + host + sprites_data[key].replace("/media/", "")
+                    "https://" + host + sprites_data[key].replace("/media/", "")
                 )
 
         return sprites_data
@@ -2193,10 +2193,10 @@ class MoveDetailSerializer(serializers.ModelSerializer):
         details = None
 
         if (
-                normal_before_data
-                or normal_after_data
-                or super_before_data
-                or super_after_data
+            normal_before_data
+            or normal_after_data
+            or super_before_data
+            or super_after_data
         ):
 
             details = OrderedDict()
@@ -2420,7 +2420,7 @@ class PokemonFormDetailSerializer(serializers.ModelSerializer):
         for key in sprites_data:
             if sprites_data[key]:
                 sprites_data[key] = (
-                        "https://" + host + sprites_data[key].replace("/media/", "")
+                    "https://" + host + sprites_data[key].replace("/media/", "")
                 )
 
         return sprites_data
@@ -2700,10 +2700,10 @@ class PokemonDetailSerializer(serializers.ModelSerializer):
                 version_detail["level_learned_at"] = move["level"]
                 version_detail["version_group"] = version_data[
                     move["version_group"] - 1
-                    ]
+                ]
                 version_detail["move_learn_method"] = method_data[
                     move["move_learn_method"] - 1
-                    ]
+                ]
 
                 pokemon_move_details["version_group_details"].append(version_detail)
 
